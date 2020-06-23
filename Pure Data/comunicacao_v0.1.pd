@@ -1,0 +1,36 @@
+#N canvas 407 130 653 300 10;
+#X msg 100 41 listen 0;
+#X obj 100 91 print;
+#X obj 317 243 netsend -u;
+#X msg 328 59 disconnect;
+#X floatatom 420 180 0 0 0 0 - - -;
+#X msg 60 15 listen 1337;
+#X obj 100 70 netreceive -u 1337;
+#X msg 317 20 connect 192.168.0.200 5555;
+#X obj 420 161 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144
+-1 -1 4;
+#X msg 420 207 send 0 \$1;
+#X floatatom 413 54 0 0 0 0 - - -;
+#X msg 413 81 send \$1;
+#X obj 63 248 netsend -u;
+#X floatatom 166 185 0 0 0 0 - - -;
+#X obj 166 166 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144
+-1 -1 4;
+#X msg 21 169 disconnect;
+#X msg 9 150 connect 192.168.0.200 42;
+#X msg 166 212 send \$1;
+#X connect 0 0 6 0;
+#X connect 3 0 2 0;
+#X connect 4 0 9 0;
+#X connect 5 0 6 0;
+#X connect 6 0 1 0;
+#X connect 7 0 2 0;
+#X connect 8 0 4 0;
+#X connect 9 0 2 0;
+#X connect 10 0 11 0;
+#X connect 11 0 2 0;
+#X connect 13 0 17 0;
+#X connect 14 0 13 0;
+#X connect 15 0 12 0;
+#X connect 16 0 12 0;
+#X connect 17 0 12 0;
