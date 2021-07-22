@@ -1,0 +1,26 @@
+#N canvas 245 23 894 670 12;
+#X declare -path else;
+#X obj 713 24 declare -path else;
+#X msg 448 347 connect 169.254.68.51 5555;
+#X obj 44 67 initmess listen 7777 169.254.68.52;
+#X obj 65 191 print receive;
+#X obj 378 374 netsend -u -b;
+#X obj 68 127 netreceive -u -b;
+#X obj 70 151 oscparse;
+#X obj 640 94 tgl 25 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 378 72 5 0 0 0 - - -;
+#X msg 473 171 format s;
+#X obj 378 214 oscformat setar tempoTotal;
+#X obj 378 171 any2symbol;
+#X obj 378 146 t f b, f 14;
+#X connect 1 0 4 0;
+#X connect 2 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 3 0;
+#X connect 8 0 12 0;
+#X connect 9 0 10 0;
+#X connect 10 0 4 0;
+#X connect 11 0 10 0;
+#X connect 12 0 11 0;
+#X connect 12 1 9 0;
