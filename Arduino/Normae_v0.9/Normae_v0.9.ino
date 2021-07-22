@@ -751,7 +751,7 @@ void mensagemDeArmado(int armado)
 void setaTensao(OSCMessage &msg, int addrOffset)
 {
   int porta = msg.getInt(0);
-  int tensao = msg.getInt(1);
+  int tensao = msg.getInt(2);
   
   OSCMessage msgOUT("/porta");
   msgOUT.add(porta);
@@ -760,7 +760,7 @@ void setaTensao(OSCMessage &msg, int addrOffset)
   
   Serial.print("Tensão da Porta n.");
   Serial.print(porta);
-  // Serial.print(" para ");
+  Serial.print(" para ");
   Serial.print(tensao);
   Serial.println("V");
 
