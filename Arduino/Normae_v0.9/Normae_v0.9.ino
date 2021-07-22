@@ -573,7 +573,7 @@ void loop()
 //=======================================================================================
 // Função para resetar Arduino
 //=======================================================================================
-// void (*funcaoReset) () = 0;
+ void (*funcaoReset) () = 0;
 
 
 //=======================================================================================
@@ -745,12 +745,13 @@ void mensagemDeArmado(int armado)
 //
 //
 //           setar/tensao/Porta/(int (1-12))/para/(int (12/24))
+//   Modificado para: setar/tensao/(int (1-12))/(int (12/24))
 //=======================================================================================
 
 void setaTensao(OSCMessage &msg, int addrOffset)
 {
-  int porta = msg.getInt(1);
-  int tensao = msg.getInt(3);
+  int porta = msg.getInt(0);
+  int tensao = msg.getInt(1);
   
   OSCMessage msgOUT("/porta");
   msgOUT.add(porta);
@@ -759,7 +760,7 @@ void setaTensao(OSCMessage &msg, int addrOffset)
   
   Serial.print("Tensão da Porta n.");
   Serial.print(porta);
-  Serial.print(" para ");
+  // Serial.print(" para ");
   Serial.print(tensao);
   Serial.println("V");
 
