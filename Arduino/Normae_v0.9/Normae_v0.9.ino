@@ -573,7 +573,7 @@ void loop()
 //=======================================================================================
 // Função para resetar Arduino
 //=======================================================================================
-void (*funcaoReset) () = 0;
+// void (*funcaoReset) () = 0;
 
 
 //=======================================================================================
@@ -593,12 +593,12 @@ void sincronizacaoPortaSync()
       duration = pulseIn(pinoStart, HIGH);
       portaSync = 1;
     }
-    else 
-      { 
-        portaSync = 0;
-      } 
-    Serial.print("NormaeHardware, sincronizacaoPortaSync(): portaSync = "); Serial.println(portaSync);
-    delay_millis(45);
+  else
+    { 
+      portaSync = 0;
+    }
+  Serial.print("NormaeHardware, sincronizacaoPortaSync(): portaSync = "); Serial.println(portaSync);
+  delay_millis(45);
 }
 
 
