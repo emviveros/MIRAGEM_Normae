@@ -745,7 +745,6 @@ void mensagemDeArmado(int armado)
 //
 //
 //           setar/tensao/Porta/(int (1-12))/para/(int (12/24))
-//   Modificado para: setar/tensao/(int (1-12))/(int (12/24))
 //=======================================================================================
 
 void setaTensao(OSCMessage &msg, int addrOffset)
@@ -816,7 +815,7 @@ void setaEvento(OSCMessage &msg, int addrOffset)
   tempoFinalEvento = strtoul(dadoString, NULL, 10);
   gravaTempoFinal(evento, porta, tempoFinalEvento);
 
-  //debuga_setaEvento(porta, evento);
+//  debuga_setaEvento(porta, evento);
 }
 
 
