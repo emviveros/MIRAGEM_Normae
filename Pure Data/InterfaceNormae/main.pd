@@ -1,80 +1,277 @@
-#N canvas 118 85 1154 670 10;
+#N canvas 52 23 1115 755 10;
 #X declare -path else;
-#X declare -path mrpeach;
-#X obj 740 10 declare -path else;
-#X obj 16 11 initmess listen 7777 169.254.68.52;
-#X obj 37 135 print receive;
-#X obj 452 562 netsend -u -b;
-#X obj 40 71 netreceive -u -b;
-#X obj 42 95 oscparse;
-#X floatatom 791 279 5 0 0 0 - - -;
-#X obj 75 282 bng 25 250 50 0 empty empty reset 17 7 0 10 -261234 -1
--1;
-#X obj 53 543 initmess connect 169.254.68.51 5555;
-#X obj 344 283 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X text 362 282 12V;
-#X text 362 298 24V;
-#X obj 740 30 declare -path mrpeach;
-#X obj 255 168 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X text 257 151 1;
-#X text 272 151 2;
-#X text 286 151 3;
-#X text 301 151 4;
-#X text 317 151 5;
-#X text 332 151 6;
-#X text 346 151 7;
-#X text 361 151 8;
-#X text 59 249 funcaoReset;
-#X text 271 242 setaTensao;
-#X text 794 248 setaTempoTotal;
-#X text 924 245 mensagemDeArmado;
-#X text 1044 244 iniciaOperacao;
-#N canvas 402 120 450 300 funcaoReset 0;
-#X obj 154 34 inlet;
-#X msg 194 99 1;
-#X obj 194 123 t f b;
-#X msg 226 148 format f;
-#X obj 194 196 oscformat reset;
-#X obj 184 247 outlet;
+#X declare -path ./abs;
+#X declare -lib ofelia;
+#N canvas -320 -772 1688 750 painel 1;
+#X obj 5 3 cnv 15 1098 738 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 1256 668 hradio 38 1 0 8 \$0-SELETOR_PORTAS_out empty PORTAS
+0 -18 0 24 -203904 -4160 -1 0;
+#X obj 1168 111 t b b b;
+#X obj 1370 617 s \$0-Porta_ativa;
+#X obj 1187 168 s \$0-setaEvento;
+#X obj 1207 141 s \$0-setaTempoTotal;
+#X obj 1168 197 s \$0-mensagemDeArmado;
+#X obj 837 18 bng 65 250 50 0 \$0-ARMAR_out empty ARMAR 9 30 0 16 -257985
+-1 -1;
+#X obj 975 18 bng 65 250 50 0 empty \$0-INICIAR_out INICIAR 5 30 0
+14 -204786 -1 -1;
+#X obj 1354 107 s \$0-inicia;
+#X msg 1168 177 1, f 1;
+#X obj 1269 553 vradio 30 1 0 2 \$0-SELETOR_TENSAO_out \$0-SELETOR_TENSAO_in
+empty 0 -8 0 10 -261234 -1 -1 0;
+#X obj 32 574 bng 45 250 50 0 \$0-reset_out \$0-reset_in reset 48 10
+0 18 -261234 -1 -191407;
+#X obj 1274 687 cnv 1 1 1 empty empty 1 -5 0 0 18 -33289 -1 0;
+#X obj 1313 687 cnv 1 1 1 empty empty 2 -6 0 0 18 -33289 -1 0;
+#X obj 1351 686 cnv 1 1 1 empty empty 3 -5 1 0 18 -262144 -1 0;
+#X obj 1388 689 cnv 1 1 1 empty empty 4 -5 -2 0 18 -262144 -1 0;
+#X obj 1426 686 cnv 1 1 1 empty empty 5 -4 1 0 18 -33289 -1 0;
+#X obj 1461 687 cnv 1 1 1 empty empty 6 -1 0 0 18 -33289 -1 0;
+#X obj 1504 687 cnv 1 1 1 empty empty 7 -5 0 0 18 -1 -1 0;
+#X obj 1538 687 cnv 1 1 1 empty empty 8 -2 0 0 18 -1 -1 0;
+#X obj 1305 555 cnv 2 2 2 empty empty 12V 0 12 0 22 -66577 -191407
+0;
+#X obj 1305 589 cnv 2 2 2 empty empty 24V 0 12 0 22 -66577 -191407
+0;
+#X obj 522 102 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 82 cnv 2 2 2 empty empty PORTA_1 0 12 0 18 -66577 -228856
+0;
+#X obj 1168 78 r \$0-ARMAR_out;
+#X obj 1354 78 r \$0-INICIAR_out;
+#X obj 1369 585 r \$0-SELETOR_PORTAS_out;
+#X obj 522 181 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 161 cnv 2 2 2 empty empty PORTA_2 0 12 0 18 -66577 -228856
+0;
+#X obj 522 262 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 242 cnv 2 2 2 empty empty PORTA_3 0 12 0 18 -66577 -228856
+0;
+#X obj 522 341 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 321 cnv 2 2 2 empty empty PORTA_4 0 12 0 18 -66577 -228856
+0;
+#X obj 522 419 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 399 cnv 2 2 2 empty empty PORTA_5 0 12 0 18 -66577 -228856
+0;
+#X obj 522 498 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 478 cnv 2 2 2 empty empty PORTA_6 0 12 0 18 -66577 -228856
+0;
+#X obj 522 579 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 559 cnv 2 2 2 empty empty PORTA_7 0 12 0 18 -66577 -228856
+0;
+#X obj 522 658 range.hsl 448 50 0 45000 1 90 90 90 0 116 217 empty
+empty;
+#X obj 521 638 cnv 2 2 2 empty empty PORTA_8 0 12 0 18 -66577 -228856
+0;
+#X obj 43 178 cnv 4 100 60 empty empty NORMAE_v0.9-3 8 12 0 29 -66577
+-228856 0;
+#X obj 27 22 pic 0 ./data/logoMiragem.gif empty empty 0 0;
+#X obj 1157 309 r \$0-customizacaoSliders;
+#N canvas 742 150 450 300 customizarRangeSlider 0;
+#X obj 39 102 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -228856 -1
+-1 1;
+#X msg 39 170 mode \$1;
+#X text 58 101 shift (default), f 31;
+#X text 58 117 select (hotkey shift), f 31;
+#X text 58 132 extend (hotkey command/control);
+#X text 58 147 expand (hotkey alt/option), f 31;
+#X floatatom 290 121 5 0 0 0 - - -;
+#X msg 290 143 width \$1;
+#X floatatom 366 119 5 0 0 0 - - -;
+#X msg 366 141 height \$1;
+#X obj 209 242 outlet;
+#X msg 203 19 bgcolor 90 90 90;
+#X msg 266 58 fgcolor 0 116 217;
+#X msg 100 24 range 0 45000;
 #X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 2 0 4 0;
-#X connect 2 1 3 0;
-#X connect 3 0 4 0;
-#X connect 4 0 5 0;
-#X restore 75 324 pd funcaoReset;
-#N canvas 445 180 450 403 setaTensao 0;
-#X obj 50 18 inlet;
-#X obj 215 20 inlet;
-#X obj 177 224 t a b;
-#X obj 178 162 pack f f;
-#X floatatom 139 128 5 0 0 1 porta - -;
-#X obj 239 102 sel 0 1, f 12;
-#X msg 239 121 12;
-#X msg 273 121 24;
-#X obj 177 272 oscformat setar tensao;
-#X obj 98 71 + 1;
-#X msg 177 202 list \$1 para \$2;
-#X msg 204 243 format isi;
-#X obj 147 343 outlet;
-#X connect 0 0 9 0;
-#X connect 1 0 5 0;
-#X connect 2 0 8 0;
-#X connect 2 1 11 0;
-#X connect 3 0 10 0;
-#X connect 4 0 3 0;
-#X connect 5 0 6 0;
-#X connect 5 1 7 0;
-#X connect 6 0 3 1;
-#X connect 7 0 3 1;
-#X connect 8 0 12 0;
-#X connect 9 0 4 0;
-#X connect 10 0 2 0;
-#X connect 11 0 8 0;
-#X restore 203 322 pd setaTensao;
-#X f 24;
+#X connect 1 0 10 0;
+#X connect 6 0 7 0;
+#X connect 7 0 10 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;
+#X restore 1156 267 pd customizarRangeSlider;
+#X obj 1156 289 s \$0-customizacaoSliders;
+#X obj 404 113 nbx 6 30 0 75000 0 0 \$0_Porta1_min_out \$0_Porta1_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 27 256;
+#X obj 975 111 nbx 6 30 0 75000 0 0 \$0_Porta1_max_out \$0_Porta1_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 392 256;
+#X obj 404 192 nbx 6 30 0 75000 0 0 \$0_Porta2_min_out \$0_Porta2_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 190 nbx 6 30 0 75000 0 0 \$0_Porta2_max_out \$0_Porta2_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 404 273 nbx 6 30 0 75000 0 0 \$0_Porta3_min_out \$0_Porta3_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 271 nbx 6 30 0 75000 0 0 \$0_Porta3_max_out \$0_Porta3_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 404 352 nbx 6 30 0 75000 0 0 \$0_Porta4_min_out \$0_Porta4_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 350 nbx 6 30 0 75000 0 0 \$0_Porta4_max_out \$0_Porta4_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 404 431 nbx 6 30 0 75000 0 0 \$0_Porta5_min_out \$0_Porta5_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 429 nbx 6 30 0 75000 0 0 \$0_Porta5_max_out \$0_Porta5_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 404 510 nbx 6 30 0 75000 0 0 \$0_Porta6_min_out \$0_Porta6_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 508 nbx 6 30 0 75000 0 0 \$0_Porta6_max_out \$0_Porta6_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 404 591 nbx 6 30 0 75000 0 0 \$0_Porta7_min_out \$0_Porta7_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 589 nbx 6 30 0 75000 0 0 \$0_Porta7_max_out \$0_Porta7_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 404 670 nbx 6 30 0 75000 0 0 \$0_Porta8_min_out \$0_Porta8_min_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#X obj 975 668 nbx 6 30 0 75000 0 0 \$0_Porta8_max_out \$0_Porta8_max_in
+empty 0 -8 0 18 -99865 -228856 -228856 0 256;
+#N canvas 267 -753 912 675 controlador_de_tempos_na_Interface 0;
+#X obj 41 610 s \$0-tempos;
+#X obj 59 9 r \$0_Porta1_min_out;
+#X obj 91 28 r \$0_Porta1_max_out;
+#X obj 28 48 pack2 1 0 0;
+#X obj 64 115 pack2 2 0 0;
+#X obj 95 76 r \$0_Porta2_min_out;
+#X obj 127 95 r \$0_Porta2_max_out;
+#X obj 117 180 pack2 3 0 0;
+#X obj 148 141 r \$0_Porta3_min_out;
+#X obj 180 160 r \$0_Porta3_max_out;
+#X obj 153 247 pack2 4 0 0;
+#X obj 184 208 r \$0_Porta4_min_out;
+#X obj 216 227 r \$0_Porta4_max_out;
+#X obj 209 319 pack2 5 0 0;
+#X obj 240 280 r \$0_Porta5_min_out;
+#X obj 272 299 r \$0_Porta5_max_out;
+#X obj 245 386 pack2 6 0 0;
+#X obj 276 347 r \$0_Porta6_min_out;
+#X obj 308 366 r \$0_Porta6_max_out;
+#X obj 298 451 pack2 7 0 0;
+#X obj 329 412 r \$0_Porta7_min_out;
+#X obj 361 431 r \$0_Porta7_max_out;
+#X obj 334 518 pack2 8 0 0;
+#X obj 365 479 r \$0_Porta8_min_out;
+#X obj 397 498 r \$0_Porta8_max_out;
+#X obj 736 93 controlaTemposPorta 1;
+#X obj 559 30 initmess \$0;
+#X obj 736 74 pipe 100;
+#X obj 559 51 t f f f f f f f f, f 30;
+#X obj 710 114 pipe 100;
+#X obj 710 133 controlaTemposPorta 2;
+#X obj 685 154 pipe 100;
+#X obj 660 194 pipe 100;
+#X obj 634 234 pipe 100;
+#X obj 609 274 pipe 100;
+#X obj 584 314 pipe 100;
+#X obj 559 354 pipe 100;
+#X obj 685 173 controlaTemposPorta 3;
+#X obj 660 213 controlaTemposPorta 4;
+#X obj 634 253 controlaTemposPorta 5;
+#X obj 609 293 controlaTemposPorta 6;
+#X obj 584 333 controlaTemposPorta 7;
+#X obj 559 373 controlaTemposPorta 8;
+#X connect 1 0 3 1;
+#X connect 2 0 3 2;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 4 1;
+#X connect 6 0 4 2;
+#X connect 7 0 0 0;
+#X connect 8 0 7 1;
+#X connect 9 0 7 2;
+#X connect 10 0 0 0;
+#X connect 11 0 10 1;
+#X connect 12 0 10 2;
+#X connect 13 0 0 0;
+#X connect 14 0 13 1;
+#X connect 15 0 13 2;
+#X connect 16 0 0 0;
+#X connect 17 0 16 1;
+#X connect 18 0 16 2;
+#X connect 19 0 0 0;
+#X connect 20 0 19 1;
+#X connect 21 0 19 2;
+#X connect 22 0 0 0;
+#X connect 23 0 22 1;
+#X connect 24 0 22 2;
+#X connect 26 0 28 0;
+#X connect 27 0 25 0;
+#X connect 28 0 36 0;
+#X connect 28 1 35 0;
+#X connect 28 2 34 0;
+#X connect 28 3 33 0;
+#X connect 28 4 32 0;
+#X connect 28 5 31 0;
+#X connect 28 6 29 0;
+#X connect 28 7 27 0;
+#X connect 29 0 30 0;
+#X connect 31 0 37 0;
+#X connect 32 0 38 0;
+#X connect 33 0 39 0;
+#X connect 34 0 40 0;
+#X connect 35 0 41 0;
+#X connect 36 0 42 0;
+#X restore 1160 360 pd controlador_de_tempos_na_Interface;
+#N canvas 112 138 1067 316 controle 0;
+#X obj 40 65 outlet;
+#X obj 140 106 outlet;
+#X obj 255 149 outlet;
+#X obj 366 197 outlet;
+#X obj 551 69 outlet;
+#X obj 633 116 outlet;
+#X obj 737 163 outlet;
+#X obj 834 205 outlet;
+#X text 37 86 Porta 1;
+#X text 137 127 Porta 2;
+#X text 252 170 Porta 3;
+#X text 363 218 Porta 4;
+#X text 548 90 Porta 5;
+#X text 630 137 Porta 6;
+#X text 734 184 Porta 7;
+#X text 831 226 Porta 8;
+#X obj 20 14 r \$0-rangeSlider_Porta1;
+#X obj 120 55 r \$0-rangeSlider_Porta2;
+#X obj 235 98 r \$0-rangeSlider_Porta3;
+#X obj 346 146 r \$0-rangeSlider_Porta4;
+#X obj 531 18 r \$0-rangeSlider_Porta5;
+#X obj 613 65 r \$0-rangeSlider_Porta6;
+#X obj 717 112 r \$0-rangeSlider_Porta7;
+#X obj 814 154 r \$0-rangeSlider_Porta8;
+#X text 163 264 [pd painel] -> [pd controlador_de_tempos_na_interface]
+;
+#X text 139 242 Para saber de onde vem:;
+#X text 491 264 -> [controleTemposPorta \$1];
+#X connect 16 0 0 0;
+#X connect 17 0 1 0;
+#X connect 18 0 2 0;
+#X connect 19 0 3 0;
+#X connect 20 0 4 0;
+#X connect 21 0 5 0;
+#X connect 22 0 6 0;
+#X connect 23 0 7 0;
+#X restore 1159 379 pd controle de sliders;
+#X obj 1491 17 declare -path else;
+#N canvas 16 218 1163 520 comunicação 0;
+#X obj 81 309 initmess listen 7777 169.254.68.52;
+#X obj 102 433 print receive;
+#X obj 114 143 netsend -u -b;
+#X obj 105 369 netreceive -u -b;
+#X obj 107 393 oscparse;
+#X obj 69 78 initmess connect 169.254.68.51 5555;
+#X obj 108 107 r \$0-toNormae;
+#X obj 52 266 note 425 16 Menlo empty 0 0 0 0 0 255 255 255 0 0 Recebe
+OSC de Normae;
+#X obj 46 36 note 425 16 Menlo empty 0 0 0 0 0 255 255 255 0 0 Envia
+OSC para Normae;
+#X obj 311 17 cnv 1 1 470 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X floatatom 850 149 9 0 0 0 - - -;
 #N canvas 380 143 450 300 setaTempoTotal 0;
 #X obj 128 35 inlet;
 #X msg 270 131 format s;
@@ -88,120 +285,98 @@
 #X connect 3 0 2 0;
 #X connect 4 0 3 0;
 #X connect 4 1 1 0;
-#X restore 791 320 pd setaTempoTotal;
-#X text 486 88 setaEvento;
-#N canvas 143 47 991 670 setaEvento 0;
+#X restore 810 208 pd setaTempoTotal;
+#N canvas 143 47 991 670 setaEvento 1;
 #X obj 41 12 inlet;
 #X obj 58 636 outlet;
 #X obj 76 542 t a b;
 #X obj 76 590 oscformat setar evento;
-#X text 326 5 Evento 1 a 5;
-#X floatatom 169 18 5 0 0 0 - - -;
-#X msg 169 38 width \$1;
-#X floatatom 230 18 5 0 0 0 - - -;
-#X msg 230 38 height \$1;
-#X obj 695 42 range.hsl 255.01 58 0 127 1 255 255 255 96 96 96 empty
-empty;
-#X obj 695 112 range.hsl 255.01 58 0 127 1 255 255 255 96 96 96 empty
-empty;
-#X obj 695 182 range.hsl 255.01 58 0 127 1 255 255 255 96 96 96 empty
-empty;
-#X obj 695 252 range.hsl 255.01 58 0 127 1 255 255 255 96 96 96 empty
-empty;
-#X obj 695 321 range.hsl 255.01 58 0 127 1 255 255 255 96 96 96 empty
-empty;
-#X msg 115 18 mode 1;
-#X obj 361 97 range.hsl 255.01 58 0 50000 1 255 255 255 96 96 96 empty
-empty;
-#X obj 363 172 unpack;
-#X floatatom 363 232 9 0 0 0 - - -;
-#X floatatom 448 236 9 0 0 0 - - -;
-#X msg 338 72 range 0 50000;
-#X obj 232 152 + 1;
-#X obj 275 320 pack2 1 1 0 0;
-#X obj 275 341 unpack f f f f, f 35;
-#X obj 220 384 v \$0-evento;
-#X obj 297 384 v \$0-porta;
-#X obj 380 384 v \$0-tempoInicio;
-#X obj 487 384 v \$0-tempoFinal;
+#X obj 265 41 unpack;
+#X floatatom 244 83 9 0 0 0 - - -;
+#X floatatom 315 80 9 0 0 0 - - -;
+#X obj 170 83 + 1;
+#X obj 143 110 pack2 1 1 0 0;
+#X obj 143 131 unpack f f f f, f 35;
+#X obj 88 174 v \$0-evento;
+#X obj 165 174 v \$0-porta;
+#X obj 248 174 v \$0-tempoInicio;
+#X obj 355 174 v \$0-tempoFinal;
 #X obj 76 440 v \$0-evento;
-#X obj 153 440 v \$0-porta;
-#X obj 236 440 v \$0-tempoInicio;
-#X obj 343 440 v \$0-tempoFinal;
-#X obj 32 92 route setaEvento;
+#X obj 157 440 v \$0-porta;
+#X obj 238 440 v \$0-tempoInicio;
+#X obj 347 440 v \$0-tempoFinal;
+#X obj 41 64 route setaEvento;
 #X obj 77 404 t b b b b;
-#X obj 226 80 inlet;
-#X obj 298 76 inlet;
+#X obj 164 11 inlet;
+#X obj 266 10 inlet;
 #X obj 292 535 display;
 #X obj 83 334 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X msg 76 502 \$1 Porta \$2 tempoInicio \$3 tempoFinal \$4;
-#X obj 406 365 i;
-#X obj 486 363 i;
-#X obj 367 200 i;
-#X obj 447 198 i;
-#X floatatom 32 393 5 0 0 0 - - -;
+#X obj 274 155 i;
+#X obj 354 153 i;
+#X obj 265 62 i;
+#X obj 312 59 i;
 #X obj 76 481 pack f f s s, f 41;
 #X obj 238 460 any2symbol;
-#X obj 338 461 any2symbol;
+#X obj 347 461 any2symbol;
 #X msg 103 561 format isissss;
-#X connect 0 0 31 0;
+#X obj 549 55 r \$0-eventoNaPorta;
+#X obj 572 104 unpack f f f, f 33;
+#X text 571 85 Porta;
+#X text 643 86 tempoInicial;
+#X text 755 86 tempoFinal;
+#X floatatom 572 125 5 0 0 0 - - -;
+#X floatatom 669 124 5 0 0 0 - - -;
+#X floatatom 767 124 5 0 0 0 - - -;
+#X obj 547 210 ofelia d \$0-memoriaDeEventos;
+#X obj 600 178 initmess read -c ./scripts/memoria_de_eventos.lua;
+#X msg 450 83 setaEvento;
+#X connect 0 0 18 0;
+#X connect 0 0 41 0;
 #X connect 2 0 3 0;
-#X connect 2 1 46 0;
+#X connect 2 1 32 0;
 #X connect 3 0 1 0;
-#X connect 5 0 6 0;
-#X connect 6 0 9 0;
-#X connect 7 0 8 0;
+#X connect 4 0 27 0;
+#X connect 4 1 28 0;
+#X connect 5 0 8 2;
+#X connect 6 0 8 3;
+#X connect 7 0 8 1;
 #X connect 8 0 9 0;
-#X connect 14 0 9 0;
-#X connect 15 0 16 0;
-#X connect 16 0 40 0;
-#X connect 16 1 41 0;
-#X connect 17 0 21 2;
-#X connect 18 0 21 3;
-#X connect 19 0 15 0;
-#X connect 20 0 21 1;
-#X connect 21 0 22 0;
-#X connect 22 0 23 0;
-#X connect 22 1 24 0;
-#X connect 22 2 38 0;
-#X connect 22 3 39 0;
-#X connect 27 0 43 0;
-#X connect 28 0 43 1;
-#X connect 29 0 44 0;
-#X connect 30 0 45 0;
-#X connect 31 0 32 0;
-#X connect 32 0 27 0;
-#X connect 32 1 28 0;
-#X connect 32 2 29 0;
-#X connect 32 3 30 0;
-#X connect 33 0 20 0;
-#X connect 33 0 16 0;
-#X connect 34 0 16 0;
-#X connect 36 0 32 0;
-#X connect 37 0 2 0;
-#X connect 37 0 35 0;
-#X connect 38 0 25 0;
-#X connect 39 0 26 0;
-#X connect 40 0 17 0;
-#X connect 41 0 18 0;
-#X connect 42 0 27 0;
-#X connect 43 0 37 0;
-#X connect 44 0 43 2;
-#X connect 45 0 43 3;
-#X connect 46 0 3 0;
-#X restore 457 265 pd setaEvento;
-#X obj 504 125 range.hsl 255.01 58 0 50000 1 255 255 255 96 96 96 empty
-empty;
-#X msg 404 171 setaEvento;
-#X text 275 120 Portas;
-#X obj 550 200 unpack f f;
-#X obj 550 220 i;
-#X obj 607 219 i;
-#X floatatom 550 241 9 0 0 0 - - -;
-#X floatatom 609 239 9 0 0 0 - - -;
-#X obj 1051 270 bng 35 250 50 0 empty empty Inicia 17 7 0 10 -204786
--1 -1;
+#X connect 9 0 10 0;
+#X connect 9 1 11 0;
+#X connect 9 2 25 0;
+#X connect 9 3 26 0;
+#X connect 14 0 29 0;
+#X connect 15 0 29 1;
+#X connect 16 0 30 0;
+#X connect 17 0 31 0;
+#X connect 18 0 19 0;
+#X connect 19 0 14 0;
+#X connect 19 1 15 0;
+#X connect 19 2 16 0;
+#X connect 19 3 17 0;
+#X connect 20 0 7 0;
+#X connect 21 0 4 0;
+#X connect 23 0 19 0;
+#X connect 24 0 2 0;
+#X connect 24 0 22 0;
+#X connect 25 0 12 0;
+#X connect 26 0 13 0;
+#X connect 27 0 5 0;
+#X connect 28 0 6 0;
+#X connect 29 0 24 0;
+#X connect 30 0 29 2;
+#X connect 31 0 29 3;
+#X connect 32 0 3 0;
+#X connect 33 0 34 0;
+#X connect 33 0 41 0;
+#X connect 34 0 38 0;
+#X connect 34 1 39 0;
+#X connect 34 2 40 0;
+#X connect 42 0 41 0;
+#X connect 43 0 41 0;
+#X restore 429 132 pd setaEvento;
 #N canvas 830 120 450 300 iniciaOperacao 0;
 #X obj 136 28 inlet;
 #X msg 194 99 1;
@@ -215,11 +390,9 @@ empty;
 #X connect 2 1 5 0;
 #X connect 4 0 3 0;
 #X connect 5 0 4 0;
-#X restore 1051 310 pd iniciaOperacao;
-#X obj 781 226 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X restore 1014 104 pd iniciaOperacao;
+#X obj 810 96 bng 45 250 50 0 empty empty tempoTotal 17 7 0 10 -228856
 -1 -1;
-#X msg 833 78 ARMAR;
-#X obj 833 99 t b b b;
 #N canvas 830 120 450 300 mensagemDeArmado 0;
 #X obj 136 28 inlet;
 #X obj 194 123 t f b;
@@ -235,38 +408,155 @@ empty;
 #X connect 4 0 2 0;
 #X connect 5 0 1 0;
 #X connect 6 0 5 0;
-#X restore 934 330 pd mensagemDeArmado;
-#X obj 939 273 tgl 35 0 empty empty empty 17 7 0 10 -262130 -1 -1 0
+#X restore 623 177 pd mensagemDeArmado;
+#X obj 628 120 tgl 35 0 empty empty empty 17 7 0 10 -262130 -1 -1 0
 1;
-#X msg 838 134 1;
-#X connect 1 0 4 0;
-#X connect 4 0 5 0;
+#X obj 418 162 s \$0-toNormae;
+#X obj 799 239 s \$0-toNormae;
+#X obj 618 203 s \$0-toNormae;
+#X obj 1008 146 s \$0-toNormae;
+#X obj 433 85 r \$0-Porta_ativa;
+#X obj 380 69 r \$0-setaEvento;
+#X obj 607 65 r \$0-mensagemDeArmado;
+#X obj 810 181 v \$0-tempoTotal;
+#X obj 1007 67 r \$0-inicia;
+#X obj 810 67 r \$0-setaTempoTotal;
+#X obj 482 104 r \$0-tempos;
+#X obj 406 25 note 425 14 Menlo empty 0 0 0 0 0 255 255 255 0 0 setaEvento
+;
+#X obj 594 25 note 425 14 Menlo empty 0 0 0 0 0 255 255 255 0 0 mensagemDeArmado
+;
+#X obj 801 25 note 425 14 Menlo empty 0 0 0 0 0 255 255 255 0 0 setaTempoTotal
+;
+#X obj 983 25 note 425 14 Menlo empty 0 0 0 0 0 255 255 255 0 0 iniciaOperação
+;
+#X obj 1 17 cnv 1 1 470 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 1139 17 cnv 1 1 470 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X text 396 188 não está terminado aqui \, para verificar onde está
+setando as variáveis de tempo inicial e tempo final abrir:, f 24
+;
+#X text 393 254 [pd painel] -> [pd controlador_de_tempos_na_interface]
+;
+#X text 393 271 -> [controleTempos Porta \$1];
+#X connect 0 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 1 0;
 #X connect 5 0 2 0;
-#X connect 6 0 29 0;
-#X connect 7 0 27 0;
-#X connect 8 0 3 0;
-#X connect 9 0 28 1;
-#X connect 13 0 28 0;
-#X connect 13 0 31 1;
+#X connect 6 0 2 0;
+#X connect 10 0 24 0;
+#X connect 11 0 18 0;
+#X connect 12 0 17 0;
+#X connect 13 0 20 0;
+#X connect 14 0 24 0;
+#X connect 15 0 19 0;
+#X connect 16 0 15 0;
+#X connect 21 0 12 1;
+#X connect 22 0 12 0;
+#X connect 23 0 16 0;
+#X connect 24 0 11 0;
+#X connect 25 0 13 0;
+#X connect 26 0 14 0;
+#X connect 27 0 12 2;
+#X restore 1514 109 pd comunicação;
+#X obj 1651 127 cnv 1 1 470 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#N canvas 0 23 680 484 setaTensao 0;
+#X obj 161 434 s \$0-toNormae;
+#X obj 85 68 r \$0-Porta_ativa;
+#X obj 204 68 r \$0-Tensao;
+#X obj 19 16 note 425 14 Menlo empty 0 0 0 0 0 255 255 255 0 0 setaTensao
+;
+#X obj 194 285 t a b;
+#X floatatom 120 139 5 0 0 1 porta - -;
+#X obj 239 121 sel 0 1, f 12;
+#X msg 239 140 12;
+#X msg 273 140 24;
+#X obj 194 333 oscformat setar tensao;
+#X obj 120 118 + 1;
+#X msg 194 263 list \$1 para \$2;
+#X msg 221 304 format isi;
+#X obj 194 224 pack2 1 12;
+#X obj 470 92 s \$0-Tensao;
+#X obj 469 140 r \$0-setTensao;
+#X obj 469 161 s \$0-SELETOR_TENSAO_in;
+#X obj 470 69 r \$0-SELETOR_TENSAO_out;
+#X connect 1 0 10 0;
+#X connect 2 0 6 0;
+#X connect 4 0 9 0;
+#X connect 4 1 12 0;
+#X connect 5 0 13 0;
+#X connect 6 0 7 0;
+#X connect 6 1 8 0;
+#X connect 7 0 13 1;
+#X connect 8 0 13 1;
+#X connect 9 0 0 0;
+#X connect 10 0 5 0;
+#X connect 11 0 4 0;
+#X connect 12 0 9 0;
+#X connect 13 0 11 0;
+#X connect 15 0 16 0;
+#X connect 17 0 14 0;
+#X restore 1367 556 pd setaTensao;
+#N canvas 625 189 450 300 reset 0;
+#X obj 174 260 s \$0-toNormae;
+#X obj 28 19 note 425 14 Menlo empty 0 0 0 0 0 255 255 255 0 0 funcaoReset
+;
+#X msg 194 99 1;
+#X obj 194 123 t f b;
+#X msg 226 148 format f;
+#X obj 194 196 oscformat reset;
+#X obj 148 44 r \$0-reset_out;
+#X connect 2 0 3 0;
+#X connect 3 0 5 0;
+#X connect 3 1 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X connect 6 0 2 0;
+#X restore 30 553 pd reset;
+#X obj 696 151 nbx 6 20 0 75000 0 0 \$0_Porta1_tempo_out \$0_Porta1_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 365 256;
+#X obj 696 231 nbx 6 20 0 75000 0 0 \$0_Porta2_tempo_out \$0_Porta2_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 696 312 nbx 6 20 0 75000 0 0 \$0_Porta3_tempo_out \$0_Porta3_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 696 391 nbx 6 20 0 75000 0 0 \$0_Porta4_tempo_out \$0_Porta4_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 696 469 nbx 6 20 0 75000 0 0 \$0_Porta5_tempo_out \$0_Porta5_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 696 548 nbx 6 20 0 75000 0 0 \$0_Porta6_tempo_out \$0_Porta6_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 696 629 nbx 6 20 0 75000 0 0 \$0_Porta7_tempo_out \$0_Porta7_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 696 708 nbx 6 20 0 75000 0 0 \$0_Porta8_tempo_out \$0_Porta8_tempo_in
+empty 0 -8 0 18 -128992 -228856 -228856 0 256;
+#X obj 1485 36 declare -path ./abs;
+#X obj 1485 55 declare -lib ofelia;
+#X obj 1385 485 range.hsl;
+#X connect 2 0 10 0;
+#X connect 2 1 4 0;
+#X connect 2 2 5 0;
+#X connect 10 0 6 0;
+#X connect 25 0 2 0;
+#X connect 26 0 9 0;
 #X connect 27 0 3 0;
-#X connect 28 0 3 0;
-#X connect 29 0 3 0;
-#X connect 31 0 3 0;
-#X connect 32 0 31 2;
-#X connect 32 0 35 0;
-#X connect 33 0 31 0;
-#X connect 35 0 36 0;
-#X connect 35 1 37 0;
-#X connect 36 0 38 0;
-#X connect 37 0 39 0;
-#X connect 39 0 6 0;
-#X connect 40 0 41 0;
-#X connect 41 0 3 0;
-#X connect 42 0 6 0;
-#X connect 43 0 44 0;
-#X connect 44 0 47 0;
-#X connect 44 1 33 0;
-#X connect 44 2 42 0;
-#X connect 45 0 3 0;
-#X connect 46 0 45 0;
-#X connect 47 0 46 0;
+#X connect 44 0 23 0;
+#X connect 44 0 40 0;
+#X connect 44 0 38 0;
+#X connect 44 0 36 0;
+#X connect 44 0 34 0;
+#X connect 44 0 32 0;
+#X connect 44 0 30 0;
+#X connect 44 0 28 0;
+#X connect 45 0 46 0;
+#X connect 64 0 23 0;
+#X connect 64 1 28 0;
+#X connect 64 2 30 0;
+#X connect 64 3 32 0;
+#X connect 64 4 34 0;
+#X connect 64 5 36 0;
+#X connect 64 6 38 0;
+#X connect 64 7 40 0;
+#X coords 0 -1 1 1 1100 740 2 4 2;
+#X restore 6 6 pd painel;
