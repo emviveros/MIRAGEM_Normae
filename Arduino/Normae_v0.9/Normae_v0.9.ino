@@ -506,6 +506,8 @@ Porta porta9(9); Porta porta10(10); Porta porta11(11); Porta porta12(12);
 int pinoStart = 69;  // porta A15 = pin 69 | entrada de 2.4V a 5.5V
 int portaSync = 0;  // armazena  valor da leitura do 
 
+// Variável Global para sinalização à interface que Normae está pronta para operação
+int normaePronta = 0;
 
 //=======================================================================================
 // Configuração do programa
@@ -550,14 +552,19 @@ void loop()
 {
   OSCMsgReceive();    // processa mensagens OSC recebida
 
-  //sincronizacaoPortaSync();
+//  sincronizacaoPortaSync(); // inicia operação da Normae através de pino no Arduino
   
   if (podeIr == true)
   {
     vaiEventos();
-    //debuga_vaiEventos();
-    
+//    debuga_vaiEventos();
     verificaFimDaOperacao();
+  }
+
+  if (normaePronta == 0 )
+  {
+    // envia mensagem OSC para interface se controladora pronta ou não
+    controladoraPronta();
   }
 }
 
@@ -603,6 +610,31 @@ void sincronizacaoPortaSync()
 
 
 //=======================================================================================
+// Função para indicar ao programa GUI que esta controladora está pronta para operar 
+// 
+//=======================================================================================
+void controladoraPronta()
+{
+  OSCMessage msgOUT("/controladoraPronta");
+  if (normaePronta == 0)
+    {
+      normaePronta = 1;
+      msgOUT.add(1);
+    }
+  else
+    {
+      msgOUT.add(0);
+      normaePronta = 0;
+    }
+
+  Udp.beginPacket(rpi_ip, outPort);
+  msgOUT.send(Udp);
+  Udp.endPacket();
+  msgOUT.empty();
+}
+
+
+//=======================================================================================
 // Função de impressão do endereço IP no monitor serial
 //=======================================================================================
 void imprimeIP()
@@ -635,14 +667,56 @@ void OSCMsgReceive()
       msgIN.fill(Udp.read());
     if(!msgIN.hasError())
     {
-      msgIN.route("/reset", funcaoReset);
+      msgIN.route("/reset", resetarArduino);
       msgIN.route("/setar/tensao", setaTensao);
       msgIN.route("/setar/evento", setaEvento);
       msgIN.route("/setar/tempoTotal", setaTempoTotal);
       msgIN.route("/armarNormae", mensagemDeArmado);
       msgIN.route("/iniciar", iniciaOperacao);
+      msgIN.route("/normaeOperando", normaeOperando);
     }
   }
+}
+
+
+//=======================================================================================
+// Função normaeOperando - responde à Interface se a Controladora Normae está operacional
+//=======================================================================================
+void normaeOperando(OSCMessage &msg, int addrOffset)
+{
+  Serial.print("Recebida mensagem para saber se Normae está Operacional: /normaeOperando");
+  OSCMessage msgOUT("/controladoraPronta");
+  if (normaePronta == 0)
+    {
+      msgOUT.add(0);
+    }
+  else
+    {
+      msgOUT.add(1);
+    }
+
+  Udp.beginPacket(rpi_ip, outPort);
+  msgOUT.send(Udp);
+  Udp.endPacket();
+  msgOUT.empty();
+}
+
+
+//=======================================================================================
+// Função resetarArduino - reseta o Arduino via software
+//=======================================================================================
+void resetarArduino(OSCMessage &msg, int addrOffset)
+{
+  OSCMessage msgOUT("/resetArduino");
+
+  msgOUT.add("resetado");
+
+  Udp.beginPacket(rpi_ip, outPort);
+  msgOUT.send(Udp);
+  Udp.endPacket();
+  msgOUT.empty();
+
+  funcaoReset();
 }
 
 
