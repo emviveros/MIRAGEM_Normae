@@ -29,11 +29,17 @@ function M.list(fv)
     end
 
     --[[ controle de acionamento do botão ARMAR na Interface ]]
-    local estadoAcionamentoARMAR = 0
+    local estadoAcionamentoARMAR = 0    --[[quando a interface está zerada de entradas]]
+
     if min==0 and max==0 then
         estadoAcionamentoARMAR = 0
     else
-        estadoAcionamentoARMAR = 1
+        if max ~= memoria then    --[[ quando os valores de tempo são alterados, desarma tb ]]
+            estadoAcionamentoARMAR = 1
+            memoria = max
+        else
+            estadoAcionamentoARMAR = 0
+        end
     end
 
     --[[ seta saídas nos outlets ]]

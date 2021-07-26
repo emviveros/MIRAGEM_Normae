@@ -6,6 +6,7 @@ local nbxMax = ofValue("$0-max") --[[ referente a caixa de número com tempo fin
 local min = 0
 local tempo = 0
 local max = 0
+local memoria = 0
 
 function M.list(fv)
     --[[ inicializa variaveis ]]
@@ -18,11 +19,17 @@ function M.list(fv)
     nbxMax:set(max)
 
     --[[ controle de acionamento do botão ARMAR na Interface ]]
-    local estadoAcionamentoARMAR = 0
+    local estadoAcionamentoARMAR = 0    --[[quando a interface está zerada de entradas]]
+
     if min==0 and max==0 then
         estadoAcionamentoARMAR = 0
     else
-        estadoAcionamentoARMAR = 1
+        if tempo ~= memoria then    --[[ quando os valores de tempo são alterados, desarma tb ]]
+            estadoAcionamentoARMAR = 1
+            memoria = tempo
+        else
+            estadoAcionamentoARMAR = 0
+        end
     end
 
     --[[ seta saídas nos outlets ]]
