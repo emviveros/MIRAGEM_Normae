@@ -1,4 +1,4 @@
-#N canvas 52 23 1115 755 10;
+#N canvas 52 23 1115 755 16;
 #X declare -path ./abs;
 #X declare -lib ofelia;
 #X declare -path ./else;
@@ -394,7 +394,7 @@ OSC para Normae;
 #X connect 11 1 5 0;
 #X connect 13 0 2 0;
 #X restore 1136 60 pd comunicaçãoOSC;
-#N canvas 312 99 584 618 ToDo 1;
+#N canvas 312 99 584 618 ToDo 0;
 #X text 44 23 ToDo:;
 #X text 54 175 - implementar controladoraPronta() no arduino;
 #X text 64 311 - envia mensagem OSC para interface para ativar os botões
@@ -810,6 +810,19 @@ ARMAR, f 25;
 #X obj 515 551 r \$0-rangeSlider_Porta7;
 #X obj 510 629 r \$0-rangeSlider_Porta8;
 #X obj 1508 34 declare -path ./else;
+#N canvas 300 189 622 379 instruções 1;
+#X obj 17 18 cnv 15 580 280 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 47 29 Antes de abrir esta interface certifique-se que:;
+#X text 93 81 1) A controladora Normae esteja ligada;
+#X text 93 121 2) que o cabo de rede com adaptador esteja ligado no
+computador, f 38;
+#X text 93 181 3) Abra este programa e comece a usar, f 38;
+#X obj 17 247 cnv 15 580 100 empty empty empty 20 12 0 14 -261234 -66577
+0;
+#X text 54 272 Se não havia realizado uns dos passos anteriores \,
+feche este programa e abra novamente, f 49;
+#X restore 1465 126 pd instruções;
 #X connect 18 0 2 0;
 #X connect 82 0 16 0;
 #X connect 83 0 19 0;
