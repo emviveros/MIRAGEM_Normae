@@ -14,6 +14,9 @@
  *
  *  - Implementar uma segurança real para a confirmação de que a Normae está armada,
  *    pronta para operar na função: mensagemDeArmado
+ *    
+ *  - Implementar uma segirança real para a confirmação de estado ativo da Normae
+ *    na função: funçãonormaeAtiva
  *
  */
 
@@ -673,18 +676,19 @@ void OSCMsgReceive()
       msgIN.route("/setar/tempoTotal", setaTempoTotal);
       msgIN.route("/armarNormae", mensagemDeArmado);
       msgIN.route("/iniciar", iniciaOperacao);
-      msgIN.route("/normaeOperando", normaeOperando);
+      msgIN.route("/normaeAtiva", normaeAtiva);
     }
   }
 }
 
 
 //=======================================================================================
-// Função normaeOperando - responde à Interface se a Controladora Normae está operacional
+// Função normaeAtiva - responde à Interface se a Controladora Normae está ativa
+//                      precisa de confirmação real se está ativa
 //=======================================================================================
-void normaeOperando(OSCMessage &msg, int addrOffset)
+void normaeAtiva(OSCMessage &msg, int addrOffset)
 {
-  Serial.print("Recebida mensagem para saber se Normae está Operacional: /normaeOperando");
+  Serial.print("Recebida mensagem para saber se Normae está Ativa: /normaeAtiva \n");
   OSCMessage msgOUT("/controladoraPronta");
   if (normaePronta == 0)
     {
