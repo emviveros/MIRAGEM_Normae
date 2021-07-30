@@ -13,7 +13,7 @@
 #X obj 1138 453 vradio 30 1 0 2 \$0-SELETOR_TENSAO_out \$0-SELETOR_TENSAO_in
 empty 0 -8 0 10 -261234 -1 -1 0;
 #X obj 27 581 bng 50 250 50 0 \$0-reset_out \$0-reset_in RESET 5 24
-0 14 -235292 -1 -1;
+0 14 -54094 -1 -228856;
 #X obj 1154 402 cnv 1 1 1 empty empty 1 -5 0 0 18 -33289 -1 0;
 #X obj 1193 402 cnv 1 1 1 empty empty 2 -6 0 0 18 -33289 -1 0;
 #X obj 1231 401 cnv 1 1 1 empty empty 3 -5 1 0 18 -262144 -1 0;
@@ -366,7 +366,6 @@ setando as variáveis de tempo inicial e tempo final abrir:, f 24
 #X connect 8 0 7 0;
 #X restore 1303 255 pd mensagemDeArmando;
 #N canvas 638 91 642 613 comunicaçãoOSC 0;
-#X obj 227 350 initmess listen 7777 169.254.68.52;
 #X obj 260 214 netsend -u -b;
 #X obj 251 410 netreceive -u -b;
 #X obj 253 434 oscparse;
@@ -387,23 +386,24 @@ OSC para Normae;
 #X obj 260 259 == 0;
 #X obj 287 172 spigot 1;
 #X obj 159 519 print normaeOUT;
-#X connect 0 0 2 0;
-#X connect 0 0 13 0;
-#X connect 1 0 11 0;
-#X connect 2 0 3 0;
-#X connect 3 0 9 0;
-#X connect 4 0 17 0;
-#X connect 5 0 10 0;
-#X connect 9 0 8 0;
-#X connect 9 0 18 0;
-#X connect 10 0 1 0;
+#X obj 227 350 initmess listen 6666 169.254.68.52;
+#X connect 0 0 10 0;
+#X connect 1 0 2 0;
+#X connect 2 0 8 0;
+#X connect 3 0 16 0;
+#X connect 4 0 9 0;
+#X connect 8 0 7 0;
+#X connect 8 0 17 0;
+#X connect 9 0 0 0;
+#X connect 9 0 14 0;
+#X connect 9 1 3 0;
 #X connect 10 0 15 0;
-#X connect 10 1 4 0;
-#X connect 11 0 16 0;
-#X connect 12 0 1 0;
-#X connect 15 0 14 0;
-#X connect 16 0 17 1;
-#X connect 17 0 1 0;
+#X connect 11 0 0 0;
+#X connect 14 0 13 0;
+#X connect 15 0 16 1;
+#X connect 16 0 0 0;
+#X connect 18 0 1 0;
+#X connect 18 0 12 0;
 #X restore 1136 60 pd comunicaçãoOSC;
 #N canvas 312 99 584 618 ToDo 0;
 #X text 44 23 ToDo:;
@@ -463,7 +463,7 @@ terminar o envio de eventos;
 ;
 #X obj 99 43 r \$0-normae_out;
 #X obj 127 90 route controladoraPronta;
-#X obj 127 109 tgl 25 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 127 109 tgl 25 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #N canvas 518 198 606 557 pergunta_por_estado_de_operação 0;
 #X obj 123 20 inlet;
@@ -524,7 +524,7 @@ de verificação de conexão, f 33;
 #X msg 202 223 0;
 #X obj 127 202 sel 1;
 #X msg 127 223 1;
-#X obj 167 272 tgl 25 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 167 272 tgl 25 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 147 334 s \$0-ativar_botões;
 #X obj 127 148 t f f, f 13;

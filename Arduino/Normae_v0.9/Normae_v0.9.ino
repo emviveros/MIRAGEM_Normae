@@ -115,7 +115,7 @@ static byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 const unsigned int inPort = 5555;
 
 // porta Udp de envio
-const unsigned int outPort = 7777;
+const unsigned int outPort = 6666;
 
 
 //=======================================================================================
@@ -688,7 +688,9 @@ void OSCMsgReceive()
 //=======================================================================================
 void normaeAtiva(OSCMessage &msg, int addrOffset)
 {
-  Serial.print("Recebida mensagem para saber se Normae está Ativa: /normaeAtiva \n");
+  Serial.print("Recebida mensagem para saber se Normae está Ativa: /normaeAtiva pelo endereço:");
+  Serial.print(Udp.remoteIP());
+  Serial.print("\n");
   OSCMessage msgOUT("/controladoraPronta");
   if (normaePronta == 0)
     {
